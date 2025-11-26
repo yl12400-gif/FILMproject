@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Shopping List — Updated</title>
+
+<!-- fonts (same as your design) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg1: #f5efe7;
+    --bg2: #f8f4ee;
+    --accent: #d8c7b5;
+    --accent-2: #c7b19c;
+    --text-dark: #3f2f25;
+    --muted: #6d6d6d;
+    --card: #ffffff;
+    --circle-border: #6d4e3b;
+    --checked-fill: #d8c7b5;
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    padding:0;
+    font-family:'Inter',sans-serif;
+    background: linear-gradient(135deg,var(--bg1),var(--bg2));
+    color:var(--text-dark);
+  }
+
+  /* NAV */
+  nav{
+    width:100%;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 50px;
+    position:fixed;
+    top:0;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(8px);
+    z-index:100;
+  }
+  .logo{
+    font-family:'Playfair Display',serif;
+    font-size:1.6rem;
+    color:#6d4e3b;
+  }
+  .links a{
+    margin-left:20px;
+    color:var(--muted);
+    text-decoration:none;
+    font-weight:500;
+  }
+  .links a:hover{ color: #3c2f23; }
+
+  /* PAGE CONTAINER */
+  .page-container{
+    margin: 130px auto 80px;
+    width:90%;
+    max-width:640px;
+    padding:0 18px;
+    box-sizing:border-box;
+  }
+
+  /* CARD */
+  .shopping-list-card{
+    background:var(--card);
+    padding:36px;
+    border-radius:22px;
+    box-shadow:
+      0 8px 25px rgba(0,0,0,0.08),
+      0 4px 15px rgba(0,0,0,0.05);
+  }
+  .shopping-list-card h2{
+    font-family:'Playfair Display',serif;
+    font-size:1.85rem;
+    margin:0 0 18px 0;
+    text-align:center;
+    color:var(--text-dark);
+  }
+
+  /* LIST & LABEL ROW */
+  ul{ list-style:none; padding:0; margin:0; }
+  li{ margin:0; padding:0; }
+
+  .row-label{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid #e9e2db;
+    cursor:pointer;
+    transition: background .15s ease;
+    user-select:none;
+  }
+  .row-label:last-child{ border-bottom:none; }
+  .row-label:hover{ background: rgba(0,0,0,0.02); }
+
+  input[type="checkbox"]{
+    position:absolute;
+    opacity:0;
+    width:1px;
+    height:1px;
+  }
+
+  .checkbox-circle{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:2px solid var(--circle-border);
+    display:grid;
+    place-items:center;
+    background:transparent;
+    flex:0 0 22px;
+    transition: background .18s cubic-bezier(.2,.8,.2,1), transform .18s ease, border-color .18s ease;
+  }
+
+  .checkbox-circle svg{
+    width:12px;
+    height:12px;
+    opacity:0;
+    transform:scale(.6);
+    transition: opacity .15s ease, transform .18s cubic-bezier(.2,.8,.2,1);
+    fill:none;
+    stroke:white;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .row-text{
+    font-size:1.05rem;
+    color:var(--text-dark);
+    flex:1 1 auto;
+  }
+
+  input:checked + .checkbox-circle{
+    background: var(--checked-fill);
+    border-color: var(--checked-fill);
+    transform: scale(0.98);
+  }
+  input:checked + .checkbox-circle svg{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  .bottom-nav{ text-align:center; margin-top:36px; }
+  .bottom-nav a{
+    text-decoration:none;
+    background: var(--accent);
+    padding: 12px 26px;
+    border-radius:30px;
+    font-weight:600;
+    color:#3b2c22;
+    margin:0 8px;
+    display:inline-block;
+  }
+  .bottom-nav a:hover{ background: var(--accent-2); transform: translateY(-2px); }
+
+  @media (max-width:560px){
+    .page-container{ margin-top:110px; padding:0 14px; }
+    .shopping-list-card{ padding:22px; border-radius:16px; }
+    .checkbox-circle{ width:20px; height:20px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Grocery Shopping</div>
+  </nav>
+
+  <main class="page-container">
+    <section class="shopping-list-card" aria-labelledby="list-title">
+      <h2 id="list-title">Step 2: Select items to buy</h2>
+      <ul>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Bread</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Cereal</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Ramen</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Chips</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Chocolate</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Drinks</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Cleaning Supplies</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Spices</span>
+          </label>
+        </li>
+        <li>
+          <label class="row-label">
+            <input type="checkbox" />
+            <span class="checkbox-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            <span class="row-text">Scissors</span>
+          </label>
+        </li>
+      </ul>
+    </section>
+
+    <div class="bottom-nav">
+      <a href="index.html">Back</a>
+      <a href="page4.html">Next</a>
+    </div>
+  </main>
+
+</body>
+</html>

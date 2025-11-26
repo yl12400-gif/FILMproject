@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Items — GroceryJourney</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Fullscreen grid layout */
+.aisles {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.aisle {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: flex 0.5s ease;
+    text-decoration: none;
+    color: white;
+}
+
+.aisle video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(60%);
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.aisle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), rgba(0,0,0,0));
+    z-index: 0;
+    transition: background 0.5s ease;
+}
+
+.aisle span {
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 6px 20px rgba(0,0,0,0.7);
+    z-index: 1;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.aisle:hover {
+    flex: 1.8;
+}
+
+.aisle:hover video {
+    transform: scale(1.08);
+    filter: brightness(80%);
+}
+
+.aisle:hover span {
+    transform: translateY(-10px);
+    color: #ffdca8;
+}
+
+.aisles:hover .aisle:not(:hover) video {
+    filter: brightness(40%);
+}
+
+/* Fullscreen style */
+.aisle.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex: none;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    transition: none;
+}
+.aisle.fullscreen video {
+    transform: none;
+    filter: brightness(100%);
+}
+
+/* Tick mark */
+.aisle .tick {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #d8c7b5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.aisle .tick svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Show tick */
+.aisle.watched .tick {
+    opacity: 1;
+}
+
+/* Bottom navigation */
+.navigation {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 10;
+}
+
+.navigation a {
+    text-decoration: none;
+    background: rgba(255,255,255,0.15);
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    transition: background 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.navigation a:hover {
+    background: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+    color: #3b2c22;
+}
+
+@media (max-width: 900px) {
+    .aisles { flex-direction: column; }
+    .aisle:hover { flex: 1.5; }
+    .aisle span { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="aisles">
+    <div class="aisle">
+        <video autoplay muted loop src="bread.mp4"></video>
+        <span>Bread</span>
+        <div class="tick">
+            <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+    </div>
+    <div class="aisle">
+        <video autoplay muted loop src="cereal.mp4"></video>
+        <span>Cereal</span>
+        <div class="tick">
+            <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+    </div>
+    <div class="aisle">
+        <video autoplay muted loop src="ramen.mp4"></video>
+        <span>Ramen</span>
+        <div class="tick">
+            <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="navigation">
+    <a href="page4.html">Back</a>
+    <a href="page5.html">Next</a>
+</div>
+
+<script>
+const aisles = document.querySelectorAll('.aisle');
+
+aisles.forEach(aisle => {
+    const video = aisle.querySelector('video');
+
+    // Grid videos loop initially
+    video.loop = true;
+
+    aisle.addEventListener('click', () => {
+        // Enter fullscreen
+        aisles.forEach(a => a.classList.remove('fullscreen'));
+        aisle.classList.add('fullscreen');
+
+        // Play clicked video once
+        video.loop = false;
+        video.currentTime = 0;
+        video.play();
+
+        // Pause all other videos
+        aisles.forEach(a => {
+            const v = a.querySelector('video');
+            if (v !== video) v.pause();
+        });
+
+        // When fullscreen video ends
+        const onVideoEnd = () => {
+            aisle.classList.remove('fullscreen');
+            video.loop = true;
+
+            // Resume all grid videos
+            aisles.forEach(a => {
+                const v = a.querySelector('video');
+                v.play();
+            });
+
+            // Show tick mark
+            aisle.classList.add('watched');
+        };
+
+        video.addEventListener('ended', onVideoEnd, { once: true });
+    });
+});
+</script>
+
+</body>
+</html>

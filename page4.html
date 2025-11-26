@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Aisles</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+    /* GLOBAL STYLING */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    /* FULL SCREEN AISLES */
+    .aisles {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .aisle {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: flex 0.5s ease;
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Aisle background images */
+    .aisle img {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        filter: brightness(60%);
+        transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    /* Cinematic gradient overlay */
+    .aisle::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        z-index: 0;
+        transition: background 0.5s ease;
+    }
+
+    /* Aisle labels */
+    .aisle span {
+        position: relative;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 0 6px 20px rgba(0,0,0,0.7);
+        z-index: 1;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    /* Hover effects */
+    .aisle:hover {
+        flex: 1.8;
+    }
+
+    .aisle:hover img {
+        transform: scale(1.08);
+        filter: brightness(80%);
+    }
+
+    .aisle:hover span {
+        transform: translateY(-10px);
+        color: #ffdca8;
+    }
+
+    /* Dim non-hovered aisles */
+    .aisles:hover .aisle:not(:hover) img {
+        filter: brightness(40%);
+    }
+
+    /* Navigation */
+    .navigation {
+        position: absolute;
+        bottom: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        z-index: 10;
+    }
+
+    .navigation a {
+        text-decoration: none;
+        background: rgba(255,255,255,0.15);
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-weight: 600;
+        color: #fff;
+        font-family: 'Playfair Display', serif;
+        transition: background 0.3s ease, transform 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .navigation a:hover {
+        background: rgba(255,255,255,0.35);
+        transform: translateY(-2px);
+        color: #3b2c22;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .aisles {
+            flex-direction: column;
+        }
+        .aisle:hover {
+            flex: 1.5;
+        }
+        .aisle span {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="aisles">
+    <a href="page4sub1.html" class="aisle">
+        <img src="1.png" alt="Food">
+    </a>
+    <a href="page4sub2.html" class="aisle">
+        <img src="2.png" alt="Fruit"> 
+    </a>
+    <a href="page4sub3.html" class="aisle">
+        <img src="3.png" alt="Tools">
+    </a>
+</div>
+
+<div class="navigation">
+    <a href="index.html">Home</a>
+    <a href="page5.html">Finish Shopping</a>
+</div>
+
+</body>
+</html>
