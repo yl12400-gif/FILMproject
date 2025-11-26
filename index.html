@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opening Page</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background: black;
+        font-family: 'Inter', sans-serif; /* body text */
+        color: rgb(237, 193, 162);
+        cursor: pointer; /* indicate user needs to click */
+    }
+
+    /* Fullscreen video */
+    video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Click-to-start overlay */
+    #clickOverlay {
+        position: absolute;
+        bottom: 20px;       /* move to bottom */
+        right: 30px;        /* move to right */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;    /* slightly smaller */
+        letter-spacing: 2px;
+        color: rgb(237, 193, 162);
+        text-align: center;
+        z-index: 2;
+        text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.25);
+        padding: 8px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+
+    
+
+    /* Fade-in overlay container */
+    .overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 2s ease;
+        z-index: 1;
+    }
+
+    /* Luxury button */
+    .btn {
+        padding: 16px 48px;
+        font-size: 1.5rem;
+        border: 2px solid rgb(237, 193, 162);
+        border-radius: 50px;
+        background: rgba(255,255,255,0.1);
+        color: rgb(237, 193, 162);
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.4s;
+        text-decoration: none;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+        background: rgba(255,255,255,0.25);
+        color: rgb(237, 193, 162);
+        transform: translateY(-2px);
+    }
+
+    /* Fade-in animation for overlay */
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .overlay.show {
+        animation: fadeIn 0.5s ease forwards;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Background video (muted until click) -->
+<video id="bgVideo" src="scene1-EDITED.mp4" playsinline></video>
+
+<!-- Click-to-start text -->
+<div id="clickOverlay">Click to Play</div>
+
+<!-- Overlay shown after video ends -->
+<div id="overlay" class="overlay">
+    <a href="page3.html" class="btn">Start The Experience</a>
+</div>
+
+<script>
+    const video = document.getElementById("bgVideo");
+    const overlay = document.getElementById("overlay");
+    const clickOverlay = document.getElementById("clickOverlay");
+
+    function startVideo() {
+        video.play();       
+        clickOverlay.style.display = "none"; // hide click message
+        document.body.style.cursor = "default";
+    }
+
+    // First click starts the video
+    document.body.addEventListener("click", startVideo, { once: true });
+
+    // When video ends → fade in the overlay
+    video.addEventListener("ended", () => {
+        overlay.classList.add("show");
+        overlay.style.pointerEvents = "auto";
+    });
+</script>
+
+</body>
+</html> 
